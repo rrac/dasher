@@ -74,7 +74,6 @@ module.exports = {
   devServer: {
     port: 3000,
     contentBase: BUILD,
-    hot: true,
     historyApiFallback: true
   },
   plugins: [
