@@ -2,7 +2,7 @@ import { AppContainer } from 'react-hot-loader';
 import React from 'react'
 import { render as DOMRender } from 'react-dom'
 import { Provider } from 'react-redux'
-import createStore from './App/store'
+import createStore from './shared/store'
 import App from './App'
 
 
