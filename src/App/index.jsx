@@ -15,6 +15,7 @@ import Divider from 'material-ui/Divider'
 import { Dashboard, AccountBox, Timeline } from 'material-ui-icons'
 
 import Routes from './routes'
+import { Search } from './components'
 
 const drawerWidth = 240
 
@@ -71,7 +72,7 @@ const App = ({ classes }) => (
       <AppBar className={classes.appBar}>
         <Toolbar>
           <Typography type='title' color='inherit' noWrap>
-            Search System...
+            <Search />
           </Typography>
         </Toolbar>
       </AppBar>
@@ -82,7 +83,7 @@ const App = ({ classes }) => (
         }}
       >
         <div className={classes.drawerHeader}>
-          <Typography type='display1' color='inherit' noWrap>
+          <Typography type='headline' color='inherit' noWrap>
             Dashboard
           </Typography>
         </div>

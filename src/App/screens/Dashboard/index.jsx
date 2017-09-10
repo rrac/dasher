@@ -1,7 +1,13 @@
 import React from 'react'
 
+import { Widget } from './components'
+
 const Dashboard = () => (
-  <div>Hello from dashboard!</div>
+  <div>
+    <Widget full />
+    <Widget />
+    <Widget />
+  </div>
 )
 
 Dashboard.displayName = 'Dashboard'
