@@ -1,9 +1,19 @@
 import React from 'react'
 
+import { withStyles } from 'material-ui/styles'
 import { Widget } from './components'
 
-const Dashboard = () => (
-  <div>
+const styles = {
+  dashboard: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexFlow: 'wrap'
+  }
+}
+
+const Dashboard = ({ classes }) => (
+  <div className={classes.dashboard}>
     <Widget full />
     <Widget />
     <Widget />
@@ -12,4 +22,4 @@ const Dashboard = () => (
 
 Dashboard.displayName = 'Dashboard'
 
-export default Dashboard
+export default withStyles(styles)(Dashboard)
