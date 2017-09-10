@@ -42,6 +42,12 @@ const styles = theme => ({
 const Widget = ({ full = false, loading = true, classes }) => {
   const className = classnames(classes.card, { [classes.full]: full })
   const content = classnames(classes.cardContent, { [classes.loading]: loading })
+
+  const Content = loading
+    ? <CircularProgress className={classes.progress} />
+    : (
+      <h2>My content!</h2>
+    )
   return (
     <div className={className}>
       <Card className={classes.cardWrap}>
@@ -54,7 +60,7 @@ const Widget = ({ full = false, loading = true, classes }) => {
             across all continents except Antarctica
           </Typography>
           <div className={content}>
-            <CircularProgress className={classes.progress} />
+            {Content}
           </div>
         </CardContent>
         <CardActions>

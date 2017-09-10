@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
@@ -66,7 +67,13 @@ const styles = theme => ({
   }
 })
 
-const App = ({ classes }) => (
+const URL_MAPPING = {
+  ['/']: 'Dashboard',
+  ['/account']: 'Account',
+  ['/trades']: 'Trades'
+}
+
+const App = ({ classes, location }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
       <AppBar className={classes.appBar}>
@@ -84,7 +91,7 @@ const App = ({ classes }) => (
       >
         <div className={classes.drawerHeader}>
           <Typography type='headline' color='inherit' noWrap>
-            Dashboard
+            {URL_MAPPING[location.pathname] || 'Unknown!'}
           </Typography>
         </div>
         <Divider />
@@ -118,4 +125,4 @@ const App = ({ classes }) => (
 
 App.displayName = 'ApplicationWrapper'
 
-export default withStyles(styles)(App)
+export default withRouter(withStyles(styles)(App))

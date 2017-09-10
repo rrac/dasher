@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { withStyles } from 'material-ui/styles'
-import { Widget } from './components'
+import { Widget } from '_components'
 
 const styles = {
   dashboard: {
