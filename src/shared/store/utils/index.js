@@ -11,29 +11,14 @@ export const set = lens => ({
 
 
 export const makeReducer = handlers => {
-  const actionHandlers = R.values(handlers).reduce((fn, curr) => {
-    const actions = R.keys(curr)
-
-    actions.forEach(action => {
-      const handler = curr[action]
-      
-      if (R.has(action, fn)) {
-        fn.push(...handler)
-      } else {
-        fn[action] = handler
-      }
-    })
-    return fn
-  }, {})
-
   return (state, action) => {
     const { type, ...rest } = action
-    console.log(actionHandlers)
-    if (!R.has(type, actionHandlers)) {
+
+    if (!R.has(type, handlers)) {
       return state
     }
   
-    return actionHandlers[type]
+    return handlers[type]
       .reduce((s, [lens, setter, method]) => R[method](lens, setter(rest, s), s), state)
   }
 }

@@ -1,8 +1,24 @@
+import R from 'ramda'
 import { createStore } from 'redux'
 import { makeReducer } from './utils'
 import * as setters from './setters'
 
-const reducer = makeReducer(setters)
+const handlers =  R.values(setters).reduce((fn, curr) => {
+  const actions = R.keys(curr)
+
+  actions.forEach(action => {
+    const handler = curr[action]
+    
+    if (R.has(action, fn)) {
+      fn.push(...handler)
+    } else {
+      fn[action] = handler
+    }
+  })
+  return fn
+}, {})
+
+const reducer = makeReducer(handlers)
 
 export default () => createStore(
   reducer,
