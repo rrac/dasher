@@ -10,7 +10,7 @@ export const set = lens => ({
 })
 
 
-export const makeReducer = handlers => {
+export const createReducer = handlers => {
   return (state, action) => {
     const { type, ...rest } = action
 

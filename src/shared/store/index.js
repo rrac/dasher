@@ -1,6 +1,6 @@
 import R from 'ramda'
 import { createStore } from 'redux'
-import { makeReducer } from './utils'
+import { createReducer } from './utils'
 import * as setters from './setters'
 
 const handlers =  R.values(setters).reduce((fn, curr) => {
@@ -18,7 +18,7 @@ const handlers =  R.values(setters).reduce((fn, curr) => {
   return fn
 }, {})
 
-const reducer = makeReducer(handlers)
+const reducer = createReducer(handlers)
 
 export default () => createStore(
   reducer,
