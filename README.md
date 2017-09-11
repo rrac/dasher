@@ -5,9 +5,9 @@
 ## Developing
 
 ```
-$ git clone [repo]
+$ git clone git@github.com:beardedtim/dasher.git
 
-$ cd [repo]
+$ cd dasher
 
 $ yarn
 
@@ -56,6 +56,7 @@ By offering two simple methods, `set` and `createReducer`, this paradigm could b
 
 ```
 import { set, createReducer } from '@kofile/redux-lens`
+import { createStore } from 'redux'
 import * as actions from './actions'
 import * as lenses from './lenses'
 
@@ -66,4 +67,34 @@ const setters = {
     set(lenses.shapes.cards.ids).with((action) => action.ids)
   ]
 }
+
+const reducer = createReducer(setters)
+
+export default createStore(reducer)
 ```
+
+Now, whenever the action of value `actions.init` is fired, these three `HandlerTuples` will be applied in order. Meaning that the result of setting the `lenses.root` lense as the value of that object will be given as `state` to the next `HandlerTuple`, with its value being passed to the next, etc.
+
+The above uses the two functions given by the imaginary package and the ones that help use the paradigm:
+
+```
+set: Lens ->
+  { as: value -> HandlerTuple, with: setter -> HandlerTuple, using: setter -> HandlerTuple }
+```
+**set** takes a lens and returns an object with a few methods:
+
+* **as**:
+  - Takes a value and sets the lens to that specific value
+  - Is called using `R.set`
+* **with**:
+  - Takes a function of `(action, state) -> newValue`
+  - Is called using `R.set`
+* **using**:
+  - Takes a function of `(action, state) -> lenseValue -> newValue`
+  - Is called using `R.over`
+
+
+```
+createReducer: ActionHandlers -> (s, a) -> s
+```
+**creatReducer** takes a `key`/`value` mapping of action names and an array of `HandlerTuples` to call for that action.
