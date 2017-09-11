@@ -1,5 +1,7 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
+import { connect } from 'react-redux'
+import { account } from 'store/getters'
 import { Widget } from '_components'
 
 const styles = theme => ({
@@ -11,14 +13,18 @@ const styles = theme => ({
   }
 })
 
-const Account = ({ classes }) => (
+const Account = ({ classes, activities }) => (
   <div className={classes.root}>
-    <Widget />
-    <Widget />
-    <Widget full loading={false} />
+    {activities.map(data => <Widget {...data} key={data.id} />)}
   </div>
 )
 
 Account.displayName = 'Account'
 
-export default withStyles(styles)(Account)
+const StyledAccount = withStyles(styles)(Account)
+
+const mapStateToProps = state => ({
+  activities: account.recentActivity(state)
+})
+
+export default connect(mapStateToProps)(StyledAccount)

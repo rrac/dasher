@@ -1,16 +1,6 @@
-import R from 'ramda'
 import actions from 'store/actions'
 import * as lenses from 'store/lenses'
-import { set } from 'store/utils'
-
-const createSliceFor = key => (_, state) => R.merge(
-  state,
-  { [key]: {
-    ids: [],
-    data: {},
-    loading: true,
-  }}
-)
+import { set, createSliceFor } from 'store/utils'
 
 export default {
   [actions.init]: [
