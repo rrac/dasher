@@ -1,10 +1,50 @@
-import { always } from 'ramda'
+import * as R from 'ramda'
 
 const SET = 'set'
 const OVER = 'over'
 
 export const set = lens => ({
-  as: value => [lens, always(value), SET],
+  as: value => [lens, R.always(value), SET],
   with: setter => [lens, setter, SET],
   using: setter => [lens, setter, OVER] 
 })
+
+
+export const makeReducer = handlers => {
+  const actionHandlers = R.values(handlers).reduce((fn, curr) => {
+    const actions = R.keys(curr)
+
+    actions.forEach(action => {
+      const handler = curr[action]
+      
+      if (R.has(action, fn)) {
+        fn.push(...handler)
+      } else {
+        fn[action] = handler
+      }
+    })
+    return fn
+  }, {})
+
+  return (state, action) => {
+    const { type, ...rest } = action
+    console.log(actionHandlers)
+    if (!R.has(type, actionHandlers)) {
+      return state
+    }
+  
+    return actionHandlers[type]
+      .reduce((s, [lens, setter, method]) => R[method](lens, setter(rest, s), s), state)
+  }
+}
+
+export const assignChildLens = lens => Object.assign(lens, {
+  ids: R.compose(lens, R.lensProp('ids')),
+  data: R.compose(lens, R.lensProp('data')),
+  loading: R.compose(lens, R.lensProp('loading'))
+})
+
+export const makeBasicLens = R.compose(
+  assignChildLens,
+  R.lensProp
+)
